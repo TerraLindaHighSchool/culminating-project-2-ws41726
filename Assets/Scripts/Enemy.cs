@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
             Destroy(other.gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            gameManager.UpdateScore(1);
         }
     }
 }

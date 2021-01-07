@@ -30,6 +30,7 @@ public class SpawnManager : MonoBehaviour
             waveNumber++;
             SpawnEnemyWave(waveNumber);
             Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
+            Instantiate(powerup2Prefab, GenerateSpawnPosition(), powerup2Prefab.transform.rotation);
         }
     }
 
