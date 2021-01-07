@@ -9,12 +9,15 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody enemyRb;
     private GameObject player;
+    private GameManager gameManager;
     
     // Start is called before the first frame update
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
+
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -28,13 +31,17 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            gameManager.UpdateScore(1);
         }
+
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Projectile"))
         {
+            Destroy(gameObject);
+            Destroy(other.gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
         }
     }

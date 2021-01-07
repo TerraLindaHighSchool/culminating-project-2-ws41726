@@ -8,9 +8,16 @@ public class PlayerController : MonoBehaviour
     private GameObject focalPoint;
     private GameManager gameManager;
     private float powerupStrength = 15.0f;
+    private float powerup2Strength = 5.0f;
     public float speed = 5.0f;
     public bool hasPowerup;
+    public bool hasPowerup2;
     public GameObject powerupIndicator;
+    public GameObject powerupIndicator2;
+    public GameObject projectilePrefab;
+    public GameObject projectilePrefab2;
+    public GameObject projectilePrefab3;
+    public GameObject projectilePrefab4;
     public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
@@ -26,12 +33,24 @@ public class PlayerController : MonoBehaviour
         float forwardInput = Input.GetAxis("Vertical");
         playerRb.AddForce(focalPoint.transform.forward * speed * forwardInput);
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+        powerupIndicator2.transform.position = transform.position + new Vector3(0, 0.8f, 0);
 
         if (transform.position.y < -3)
         {
             Destroy(gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             gameManager.GameOver();
+        }
+
+        if (hasPowerup2)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+                Instantiate(projectilePrefab2, transform.position, projectilePrefab2.transform.rotation);
+                Instantiate(projectilePrefab3, transform.position, projectilePrefab3.transform.rotation);
+                Instantiate(projectilePrefab4, transform.position, projectilePrefab4.transform.rotation);
+            }
         }
     }
 
@@ -42,15 +61,32 @@ public class PlayerController : MonoBehaviour
                 hasPowerup = true;
                 Destroy(other.gameObject);
                 StartCoroutine(PowerupCountdownRoutine());
-            powerupIndicator.gameObject.SetActive(true);
+                powerupIndicator.gameObject.SetActive(true);
+            }
+
+          if (other.CompareTag("Powerup2"))
+            {
+                hasPowerup2 = true;
+                Destroy(other.gameObject);
+                StartCoroutine(Powerup2CountdownRoutine());
+                powerupIndicator2.gameObject.SetActive(true);
             }
     }
+
+
 
     IEnumerator PowerupCountdownRoutine()
     {
         yield return new WaitForSeconds(7);
         hasPowerup = false;
         powerupIndicator.gameObject.SetActive(false);
+    }
+
+    IEnumerator Powerup2CountdownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        hasPowerup2 = false;
+        powerupIndicator2.gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
