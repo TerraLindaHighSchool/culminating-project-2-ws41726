@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Particles : MonoBehaviour
 {
+    private GameManager gameManager;
     public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
@@ -17,9 +18,15 @@ public class Particles : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //When enemy dies plays particles
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            gameManager.GameOver();
         }
     }
 

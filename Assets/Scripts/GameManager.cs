@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject titleScreen;
     public bool isGameActive;
     private int score;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void UpdateScore(int scoreToAdd)
@@ -39,14 +39,5 @@ public class GameManager : MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         isGameActive = false;
     }
-
-    public void StartGame(int difficulty)
-    {
-        isGameActive = true;
-        score = 0;
-       
-        UpdateScore(0);
-
-        titleScreen.gameObject.SetActive(false);
-    }
 }
+   
