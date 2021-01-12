@@ -25,11 +25,13 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
+        gameManager = GameObject.Find("Game Manager").GetComponent <GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         float forwardInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
         playerRb.AddForce(Vector3.forward * speed * forwardInput);
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
         powerupIndicator2.transform.position = transform.position + new Vector3(0, 0.8f, 0);
 
+        //IF Player passes -3 game will end
         if (transform.position.y < -3)
         {
             Destroy(gameObject);
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
             gameManager.GameOver();
         }
 
+        //Superpower2 controls
         if (hasPowerup2)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -58,25 +62,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-          if (other.CompareTag("Powerup"))
-            {
-                hasPowerup = true;
-                Destroy(other.gameObject);
-                StartCoroutine(PowerupCountdownRoutine());
-                powerupIndicator.gameObject.SetActive(true);
-            }
+        //Destroys powerup and gives powerup ability to player  
+        if (other.CompareTag("Powerup"))
+        {
+            hasPowerup = true;
+            Destroy(other.gameObject);
+            StartCoroutine(PowerupCountdownRoutine());
+            powerupIndicator.gameObject.SetActive(true);
+        }
 
-          if (other.CompareTag("Powerup2"))
-            {
-                hasPowerup2 = true;
-                Destroy(other.gameObject);
-                StartCoroutine(Powerup2CountdownRoutine());
-                powerupIndicator2.gameObject.SetActive(true);
-            }
+        //Destroys powerup and gives powerup ability to player    
+        if (other.CompareTag("Powerup2"))
+        {
+            hasPowerup2 = true;
+            Destroy(other.gameObject);
+            StartCoroutine(Powerup2CountdownRoutine());
+            powerupIndicator2.gameObject.SetActive(true);
+        }
     }
 
 
 
+    //Powerup Countdown routine
     IEnumerator PowerupCountdownRoutine()
     {
         yield return new WaitForSeconds(7);
@@ -84,6 +91,7 @@ public class PlayerController : MonoBehaviour
         powerupIndicator.gameObject.SetActive(false);
     }
 
+    //Powerup2 Countdown routine
     IEnumerator Powerup2CountdownRoutine()
     {
         yield return new WaitForSeconds(5);
@@ -91,8 +99,10 @@ public class PlayerController : MonoBehaviour
         powerupIndicator2.gameObject.SetActive(false);
     }
 
+    
     private void OnCollisionEnter(Collision collision)
     {
+        //launches enemy away from player when in contact with powerup
         if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
             {
                 Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
