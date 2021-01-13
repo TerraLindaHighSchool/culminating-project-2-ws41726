@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private GameObject focalPoint;
     private GameManager gameManager;
+    private AudioSource playerAudio;
     private float powerupStrength = 15.0f;
     private float powerup2Strength = 5.0f;
     public float speed = 5.0f;
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab2;
     public GameObject projectilePrefab3;
     public GameObject projectilePrefab4;
+    public AudioClip crashSound;
+
     public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
         gameManager = GameObject.Find("Game Manager").GetComponent <GameManager>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -105,11 +109,22 @@ public class PlayerController : MonoBehaviour
         //launches enemy away from player when in contact with powerup
         if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
             {
+                playerAudio.PlayOneShot(crashSound, 1.0f);
                 Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
                 Rigidbody enemyRigidBody = collision.gameObject.GetComponent<Rigidbody>();
                 Vector3 awayFromPlayer = (collision.gameObject.transform.position - transform.position);
                 Debug.Log("Player collided with " + collision.gameObject + " with powerup set to " + hasPowerup);
                 enemyRigidBody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
             }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            playerAudio.PlayOneShot(crashSound, 1.0f);
+        }
+
+        if (collision.gameObject.CompareTag("Menemy"))
+        {
+            playerAudio.PlayOneShot(crashSound, 1.0f);
+        }
     }
 }

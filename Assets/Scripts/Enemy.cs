@@ -6,10 +6,12 @@ public class Enemy : MonoBehaviour
 {
     public float speed;
     public ParticleSystem explosionParticle;
+    public AudioClip crashSound;
 
     private Rigidbody enemyRb;
     private GameObject player;
     private GameManager gameManager;
+    private AudioSource playerAudio;
     private Vector3 lookDirection;
     
     // Start is called before the first frame update
@@ -19,6 +21,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
 
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

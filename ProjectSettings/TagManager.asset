@@ -9,6 +9,7 @@ TagManager:
   - Powerup#2
   - Powerup2
   - Projectile
+  - Menemy
   layers:
   - Default
   - TransparentFX

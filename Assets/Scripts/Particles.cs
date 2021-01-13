@@ -18,11 +18,18 @@ public class Particles : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //When enemy dies plays particles
+        //initiates explosion when colliding with player
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
         }
+
+        if (collision.gameObject.CompareTag("Menemy"))
+        {
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+        }
+
+
 
         if (collision.gameObject.CompareTag("Player"))
         {
