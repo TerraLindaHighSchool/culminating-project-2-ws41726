@@ -6,12 +6,10 @@ public class Enemy : MonoBehaviour
 {
     public float speed;
     public ParticleSystem explosionParticle;
-    public AudioClip crashSound;
 
     private Rigidbody enemyRb;
     private GameObject player;
     private GameManager gameManager;
-    private AudioSource playerAudio;
     private Vector3 lookDirection;
     
     // Start is called before the first frame update
@@ -21,13 +19,13 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
 
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+        //Moves towards Player
         if (player != null)
         {
               lookDirection = (player.transform.position - transform.position).normalized;
@@ -39,13 +37,14 @@ public class Enemy : MonoBehaviour
         {
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             gameManager.UpdateScore(1);
-       Destroy(gameObject);
+            Destroy(gameObject);
         }
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //When hit by projectile
         if (other.CompareTag("Projectile"))
         {
             Destroy(gameObject);

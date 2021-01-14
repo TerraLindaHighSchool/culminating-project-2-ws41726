@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     private AudioSource playerAudio;
     private float powerupStrength = 15.0f;
-    private float powerup2Strength = 5.0f;
     public float speed = 5.0f;
     public bool hasPowerup;
     public bool hasPowerup2;

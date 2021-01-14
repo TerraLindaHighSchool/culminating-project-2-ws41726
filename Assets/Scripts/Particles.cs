@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Particles : MonoBehaviour
 {
-    private GameManager gameManager;
+
     public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
@@ -31,10 +31,6 @@ public class Particles : MonoBehaviour
 
 
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            gameManager.GameOver();
-        }
     }
 
 }

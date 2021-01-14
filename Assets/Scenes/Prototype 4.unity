@@ -1931,7 +1931,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1418772312}
   gameOverText: {fileID: 1055521157}
-  restartButton: {fileID: 0}
   titleScreen: {fileID: 963294163}
   isGameActive: 0
 --- !u!4 &995222993
@@ -2984,6 +2983,7 @@ MonoBehaviour:
   enemyCount: 0
   menemyCount: 0
   waveNumber: 1
+  isGameActive: 0
 --- !u!4 &1457965540
 Transform:
   m_ObjectHideFlags: 0

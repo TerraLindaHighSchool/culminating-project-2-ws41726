@@ -12,6 +12,7 @@ public class SpawnManager : MonoBehaviour
     public int enemyCount;
     public int menemyCount;
     public int waveNumber = 1;
+    public bool isGameActive;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         enemyCount = FindObjectsOfType<Enemy>().Length;
         if (enemyCount == 0 && menemyCount == 0)
         {
@@ -37,6 +39,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+   //spawns more nemies after each wave
     void SpawnEnemyWave(int enemiesToSpawn)
     {
         for (int i = 0; i < enemiesToSpawn; i++)
@@ -46,6 +49,7 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
+   //randomizes spawn position
     private Vector3 GenerateSpawnPosition ()
     {
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
